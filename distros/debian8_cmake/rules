@@ -43,6 +43,12 @@ override_dh_auto_configure:
 	-DZM_WEB_USER=www-data \
 	-DZM_WEB_GROUP=www-data
 
+override_dh_clean:
+	dh_clean src/zm_config_defines.h
+	# Remove auto-generated files to prevent inclusion in sources
+	rm -f config.status
+	rm -f config.log
+
 override_dh_auto_install:
 	dh_auto_install --buildsystem=cmake
 	rm $(INSTDIR)/usr/share/zoneminder/api/lib/Cake/LICENSE.txt
